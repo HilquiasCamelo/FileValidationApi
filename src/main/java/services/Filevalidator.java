@@ -4,8 +4,9 @@ import interfaces.ValidationStrategy;
 import lombok.extern.log4j.Log4j2;
 
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.core.Response;
 
-@Log4j2
+
 @RequestScoped
 public class Filevalidator {
     private ValidationStrategy strategy;
@@ -17,4 +18,11 @@ public class Filevalidator {
     public  boolean validate(byte[] image){
         return strategy.validateImage(image);
     }
+
+    public Response checkFileValidity(byte[] image){
+        return strategy.checkFileValidity(image);
+    }
+
+
+
 }

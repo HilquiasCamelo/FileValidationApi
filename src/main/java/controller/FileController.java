@@ -1,6 +1,5 @@
 package controller;
 
-import interfaces.ValidationStrategy;
 import interfaces.impl.ImageValidator;
 
 import io.smallrye.common.constraint.NotNull;
@@ -32,8 +31,8 @@ import static constantes.ImageConstants.ALLOWED_FORMATS_IMG;
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 
 
-public class ArquivoResource {
-       private static final Logger log = LoggerFactory.getLogger(ArquivoResource.class);
+public class FileController {
+    private static final Logger log = LoggerFactory.getLogger(FileController.class);
     @Inject
     Filevalidator filevalidator;
 
@@ -42,26 +41,20 @@ public class ArquivoResource {
     @Path("/files")
     public Response uploadArquivo(@NotNull @MultipartForm FileForm form) {
         try {
-
             InputStream inputStream = form.file;
-
             byte[] arquivoBytes = inputStream.readAllBytes();
 
-            if ((ALLOWED_FORMATS_IMG.contains(NameFormat.getFormat(arquivoBytes)))) {
+            if (ALLOWED_FORMATS_IMG.contains(NameFormat.getFormat(arquivoBytes))) {
                 filevalidator.setStrategy(new ImageValidator());
             }
-
-            if (filevalidator.validate(arquivoBytes)) {
-                log.debug("Image valid");
-                return Response.status(Response.Status.CREATED).build();
-            } else {
-                log.error("Image validation failed");
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Invalid image").build();
-            }
+            return filevalidator.checkFileValidity(arquivoBytes);
         } catch (IOException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error processing the file").build();
         }
     }
+
+
+
 
 }
