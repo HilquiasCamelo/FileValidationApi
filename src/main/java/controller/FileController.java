@@ -1,8 +1,11 @@
 package controller;
 
+import interfaces.ValidationStrategy;
 import interfaces.impl.ImageValidator;
 
 import io.smallrye.common.constraint.NotNull;
+import io.vertx.core.impl.logging.Logger;
+import io.vertx.core.impl.logging.LoggerFactory;
 import lombok.extern.log4j.Log4j2;
 
 
@@ -30,6 +33,7 @@ import static constantes.ImageConstants.ALLOWED_FORMATS_IMG;
 
 
 public class ArquivoResource {
+       private static final Logger log = LoggerFactory.getLogger(ArquivoResource.class);
     @Inject
     Filevalidator filevalidator;
 
