@@ -31,7 +31,8 @@ public class CustomResponse {
     @Override
     public String toString() {
         return "{" +
-                "statusCode=" + statusCode +
+                "error = " + error +
+                ", statusCode=" + statusCode +
                 ", message='" + message + '\'' +
                 '}';
     }
