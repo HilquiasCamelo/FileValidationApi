@@ -2,7 +2,6 @@ package controller;
 
 import interfaces.impl.ImageValidator;
 
-import io.smallrye.common.constraint.NotNull;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import lombok.extern.log4j.Log4j2;
@@ -16,6 +15,7 @@ import util.NameFormat;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,7 +27,6 @@ import static constantes.ImageConstants.ALLOWED_FORMATS_IMG;
 @RequestScoped
 @Path("/api")
 @Produces(MediaType.TEXT_PLAIN)
-@Log4j2
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 
 
@@ -40,7 +39,7 @@ public class FileController {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("/files")
     public Response uploadArquivo(@NotNull @MultipartForm FileForm form) {
-        try {
+        try(InputStream != null) {
             InputStream inputStream = form.file;
             byte[] arquivoBytes = inputStream.readAllBytes();
 

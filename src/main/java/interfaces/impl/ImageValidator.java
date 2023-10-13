@@ -85,16 +85,13 @@ public class ImageValidator implements ValidationStrategy {
             int width = getWidth(arquivoBytes);
             int height = getHeight(arquivoBytes);
 
-            boolean isValidFormat = isValidFormat(arquivoBytes);
-            boolean isValidDimensions = validateDimensions(width, height);
-
-            if (!isValidFormat && !isValidDimensions) {
+            if (!isValidFormat(arquivoBytes) && !validateDimensions(width, height)) {
                 log.error("Invalid format and dimensions");
                 return buildResponse(Response.Status.UNSUPPORTED_MEDIA_TYPE, "Invalid format and dimensions");
-            } else if (!isValidFormat) {
+            } else if (!isValidFormat(arquivoBytes)) {
                 log.error("Invalid format");
                 return buildResponse(Response.Status.UNSUPPORTED_MEDIA_TYPE, "Invalid format");
-            } else if (!isValidDimensions) {
+            } else if (!validateDimensions(width, height)) {
                 log.error("Invalid dimensions");
                 return buildResponse(Response.Status.BAD_REQUEST, "Invalid dimensions");
             }
