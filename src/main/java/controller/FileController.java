@@ -34,7 +34,7 @@ public class FileController {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("/files")
-    public Response uploadArquivo(@NotNull @MultipartForm FileForm form) {
+    public Response uploadFile(@NotNull @MultipartForm FileForm form) {
         try {
             return imagevalidator.validateAndRespond(form);
         } catch (Exception e) {
